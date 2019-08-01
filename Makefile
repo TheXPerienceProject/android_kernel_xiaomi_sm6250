@@ -704,6 +704,7 @@ KBUILD_CFLAGS   += -O3
 else
 KBUILD_CFLAGS   += -O3
 ifeq ($(cc-name),clang)
+KBUILD_CFLAGS   += -O3
 KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55
 
 ifdef CONFIG_LLVM_POLLY
