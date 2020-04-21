@@ -56,6 +56,7 @@ extern unsigned int sysctl_sched_coloc_busy_hyst_cpu_busy_pct[NR_CPUS];
 extern unsigned int sysctl_sched_window_stats_policy;
 extern unsigned int sysctl_sched_ravg_window_nr_ticks;
 extern unsigned int sysctl_sched_dynamic_ravg_window_enable;
+extern unsigned int sysctl_walt_rtg_cfs_boost_prio;
 
 extern int
 walt_proc_group_thresholds_handler(struct ctl_table *table, int write,
