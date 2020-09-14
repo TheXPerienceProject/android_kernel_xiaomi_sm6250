@@ -233,7 +233,7 @@ static void do_input_boost_rem(struct work_struct *work)
 	if (sched_boost_active) {
 		ret = sched_set_boost(0);
 		if (ret)
-			pr_err("cpu-boost: sched boost disable failed\n");
+			pr_err("Yuki-boost: sched boost disable failed\n");
 		sched_boost_active = false;
 	}
 }
@@ -263,7 +263,7 @@ static void do_input_boost(struct kthread_work *work)
 	if (sched_boost_on_input > 0) {
 		ret = sched_set_boost(sched_boost_on_input);
 		if (ret)
-			pr_err("cpu-boost: sched boost enable failed\n");
+			pr_err("Yuki-boost: sched boost enable failed\n");
 		else
 			sched_boost_active = true;
 	}
@@ -296,7 +296,7 @@ static void do_powerkey_input_boost(struct kthread_work *work)
 	if (sched_boost_on_powerkey_input) {
 		ret = sched_set_boost(1);
 		if (ret)
-			pr_err("cpu-boost: HMP boost enable failed\n");
+			pr_err("Yuki-boost: HMP boost enable failed\n");
 		else
 			sched_boost_active = true;
 	}
@@ -415,13 +415,13 @@ static int cpu_boost_init(void)
 	cpu_boost_worker_thread = kthread_create(kthread_worker_fn,
 		&cpu_boost_worker, "cpu_boost_worker_thread");
 	if (IS_ERR(cpu_boost_worker_thread)) {
-		pr_err("cpu-boost: Failed to init kworker!\n");
+		pr_err("Yuki-boost: Failed to init kworker!\n");
 		return -EFAULT;
 	}
 
 	ret = sched_setscheduler(cpu_boost_worker_thread, SCHED_FIFO, &param);
 	if (ret)
-		pr_err("cpu-boost: Failed to set SCHED_FIFO!\n");
+		pr_err("Yuki-boost: Failed to set SCHED_FIFO!\n");
 
 	/* Now bind it to the cpumask */
 	kthread_bind_mask(cpu_boost_worker_thread, &sys_bg_mask);
