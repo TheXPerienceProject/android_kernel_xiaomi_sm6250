@@ -251,7 +251,7 @@ static int get_adapter_icl_based_ilim(struct pl_data *chip)
 	}
 
 	pr_debug("charger_type=%d final_icl=%d adapter_icl=%d main_icl=%d\n",
-		chip->charger_type, final_icl, adapter_icl, main_icl);
+		chip->charge_type, final_icl, adapter_icl, main_icl);
 
 	return final_icl;
 }
