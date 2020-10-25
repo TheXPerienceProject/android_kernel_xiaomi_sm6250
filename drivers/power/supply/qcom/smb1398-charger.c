@@ -1001,9 +1001,6 @@ static int div2_cp_master_get_prop(struct power_supply *psy,
 		/* VBAT only */
 		val->intval = POWER_SUPPLY_PL_OUTPUT_VBAT;
 		break;
-	case POWER_SUPPLY_PROP_MIN_ICL:
-		val->intval = smb1398_div2_cp_get_min_icl(chip);
-		break;
 	default:
 		rc = -EINVAL;
 		break;
@@ -1280,7 +1277,6 @@ static int smb1398_div2_cp_ilim_vote_cb(struct votable *votable,
 	if (!client)
 		return -EINVAL;
 
-	min_ilim_ua = smb1398_div2_cp_get_min_icl(chip);
 	max_ilim_ua = is_cps_available(chip) ?
 		DIV2_MAX_ILIM_DUAL_CP_UA : DIV2_MAX_ILIM_UA;
 	ilim_ua = min(ilim_ua, max_ilim_ua);
@@ -1769,8 +1765,6 @@ static void smb1398_taper_work(struct work_struct *work)
 
 	if (chip->fcc_main_votable)
 		main_fcc_ua = get_effective_result(chip->fcc_main_votable);
-
-	min_ilim_ua = smb1398_div2_cp_get_min_icl(chip);
 
 	chip->taper_entry_fv = get_effective_result(chip->fv_votable);
 	while (true) {
