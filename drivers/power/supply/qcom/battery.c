@@ -216,7 +216,7 @@ static int get_adapter_icl_based_ilim(struct pl_data *chip)
 				POWER_SUPPLY_PROP_REAL_TYPE, &pval);
 	if ((rc < 0) || ((pval.intval != POWER_SUPPLY_TYPE_USB_HVDCP_3 &&
 		pval.intval != POWER_SUPPLY_TYPE_USB_HVDCP_3P5 &&
-		pval.intval != POWER_SUPPLY_PD_PPS_ACTIVE)
+		pval.intval != POWER_SUPPLY_PD_PPS_ACTIVE)))
 		return final_icl;
 
 	/*
