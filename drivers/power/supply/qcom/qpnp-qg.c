@@ -3074,7 +3074,6 @@ static int qg_notifier_cb(struct notifier_block *nb,
 		return NOTIFY_OK;
 
 	if ((strcmp(psy->desc->name, "battery") == 0)
-		|| (strcmp(psy->desc->name, "bms") == 0)
 		|| (strcmp(psy->desc->name, "parallel") == 0)
 		|| (strcmp(psy->desc->name, "usb") == 0)
 		|| (strcmp(psy->desc->name, "dc") == 0)) {
@@ -4734,7 +4733,7 @@ static int qg_parse_dt(struct qpnp_qg *chip)
 
 		if (of_property_read_bool(node, "qcom,cl-wt-enable")) {
 			chip->cl->dt.cl_wt_enable = true;
-			chip->cl->dt.min_start_soc = -EINVAL;/*DEFAULT_CL_WT_START_SOC;*/
+			chip->cl->dt.min_start_soc = DEFAULT_CL_WT_START_SOC;
 			chip->cl->dt.max_start_soc = -EINVAL;
 		}
 
