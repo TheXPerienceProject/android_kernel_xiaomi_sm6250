@@ -40,8 +40,13 @@
  * Marco
  *
  ******************************************************/
+#ifdef CONFIG_INPUT_QTI_SPOOF
+#define AW8624_I2C_NAME "qti-haptics"
+#define AW8624_HAPTIC_NAME "qti-haptics"
+#else
 #define AW8624_I2C_NAME "aw8624_haptic"
 #define AW8624_HAPTIC_NAME "aw8624_haptic"
+#endif
 
 #define AW8624_VERSION "v1.0.9"
 
@@ -4089,7 +4094,12 @@ aw8624_i2c_probe(struct i2c_client *i2c, const struct i2c_device_id *id)
 		     HRTIMER_MODE_REL);
 	aw8624->hap_disable_timer.function = qti_hap_disable_timer;
 
+#ifdef CONFIG_INPUT_QTI_SPOOF
+	input_dev->name = "qti-haptics";
+#else
 	input_dev->name = "aw8624_haptic";
+#endif
+
 	input_set_drvdata(input_dev, aw8624);
 	aw8624->input_dev = input_dev;
 	input_set_capability(input_dev, EV_FF, FF_CONSTANT);

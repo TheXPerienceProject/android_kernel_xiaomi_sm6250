@@ -595,6 +595,13 @@ config TEST_IRQ_REQUESTER
 
 	  If in doubt, say N.
 
+config INPUT_QTI_SPOOF
+        tristate "Spoof QTI_HAPTICS on non QTI driver"
+	    default y
+        help
+          This option helps to spoof QTI vibrator to avoid hal to die when using other
+          haptic driver.
+
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/aw8624_haptic/Kconfig"
 source "drivers/misc/drv2624_haptic/Kconfig"
