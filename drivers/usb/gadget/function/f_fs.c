@@ -1694,6 +1694,7 @@ ffs_fs_mount(struct file_system_type *t, int flags,
 	rv = mount_nodev(t, flags, &data, ffs_sb_fill);
 	if (IS_ERR(rv) && data.ffs_data)
 		ffs_data_put(data.ffs_data);
+
 	return rv;
 }
 
@@ -3929,23 +3930,25 @@ static int ffs_acquire_dev(const char *dev_name, struct ffs_data *ffs_data)
 		   ffs_dev->ffs_acquire_dev_callback(ffs_dev)) {
 		ret = -ENOENT;
 	} else {
-		ffs_dev->mounted = true;
+ 		ffs_dev->mounted = true;
 		ffs_dev->ffs_data = ffs_data;
 		ffs_data->private_data = ffs_dev;
 	}
 
 	ffs_dev_unlock();
+
 	return ret;
 }
 
 static void ffs_release_dev(struct ffs_dev *ffs_dev)
 {
+
 	ENTER();
 
 	ffs_dev_lock();
 
 	if (ffs_dev && ffs_dev->mounted) {
-		ffs_dev->mounted = false;
+ 		ffs_dev->mounted = false;
 		if (ffs_dev->ffs_data) {
 			ffs_dev->ffs_data->private_data = NULL;
 			ffs_dev->ffs_data = NULL;
