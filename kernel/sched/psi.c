@@ -1102,7 +1102,6 @@ struct psi_trigger *psi_trigger_create(struct psi_group *group,
 
 void psi_trigger_destroy(struct psi_trigger *t)
 {
-	struct psi_trigger *t = container_of(ref, struct psi_trigger, refcount);
 	struct task_struct *task_to_destroy = NULL;
 	struct psi_group *group;
 	struct kthread_worker *kworker_to_destroy = NULL;

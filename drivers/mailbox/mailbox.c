@@ -93,6 +93,30 @@ exit:
 	}
 }
 
+static void msg_submit(struct mbox_chan *chan)
+{
+	unsigned long flags;
+	int err = 0;
+
+	/*
+	 * If the controller returns -EAGAIN, then it means, our spinlock
+	 * here is preventing the controller from receiving its interrupt,
+	 * that would help clear the controller channels that are currently
+	 * blocked waiting on the interrupt response.
+	 * Retry again.
+	 */
+	do {
+		err = __msg_submit(chan);
+	} while (err == -EAGAIN);
+
+	if (!err && (chan->txdone_method & TXDONE_BY_POLL)) {
+		/* kick start the timer immediately to avoid delays */
+		spin_lock_irqsave(&chan->mbox->poll_hrt_lock, flags);
+		hrtimer_start(&chan->mbox->poll_hrt, 0, HRTIMER_MODE_REL);
+		spin_unlock_irqrestore(&chan->mbox->poll_hrt_lock, flags);
+	}
+}
+
 static void tx_tick(struct mbox_chan *chan, int r)
 {
 	unsigned long flags;
